@@ -1,0 +1,78 @@
+.sidenav-container {
+  height: 100%;
+  zoom: 100%;
+  background-color: rgba(222, 224, 238, 0.24);
+}
+
+
+#main-content {
+  padding: 1%;
+  margin:auto;
+  width: 1300px;
+  /* position: relative; */
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+#messageOptions {
+  display: flex;
+  /* flex-direction: row; */
+}
+
+.messageOptionTitle {
+  color: #364968;
+}
+
+.messageTextarea{
+  width: 1250px;
+  height: 340px;
+  font-size:larger;
+  resize: vertical;
+  border: 3px solid #cccccc44;
+  border-radius: 7px;
+  font-family: Tahoma, sans-serif;
+  /* color: #364968; */
+  background-color: #efefef57;
+  color: rgba(0, 0, 0, 0.849);
+
+
+}
+
+.messageTextarea:hover{
+  outline: none !important;
+  border-color:#364968;
+}
+
+.messageTextarea:focus{
+  border-color:#364968;
+}
+
+
+
+#post-button {
+  margin-right:650px;
+}
+
+.descriPosition {
+  margin-left:5px;
+
+}
+
+#warning {
+  color:red;
+}
+
+.parent {
+  margin: 1rem;
+  padding: 0rem 2rem;
+  text-align: left;
+}
+.child {
+  display: inline-block;
+  padding: 1rem 1rem;
+  vertical-align: middle;
+}
+
+

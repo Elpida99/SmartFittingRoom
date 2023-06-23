@@ -1,0 +1,48 @@
+<mat-sidenav-container color="primary" class="sidenav-container" xmlns="http://www.w3.org/1999/html">
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <span class="pointer" style="padding-left: 20px;" (click)="goToPage('')">Smart Fitting Room</span>
+            <div style="flex: 1 1 auto;"></div>
+            <div style="padding-right:10rem;">
+                <h3 style="font-style: italic">Logged in user: {{this.loggedin}}</h3>
+            </div>
+<!--            <div *ngIf="this.loggedin!='none' || this.loggedin!=''" style="padding-right:5rem;">-->
+<!--                <button mat-raised-button color="accent" [disabled]="this.loggedin=='none'" (click)="goToPage(this.loggedin+'/myTryons')">-->
+<!--                    MyTryons-->
+<!--                </button>-->
+<!--            </div>-->
+            <div style="padding-right:2rem;">
+                <button mat-raised-button color="accent" (click)="logout()">
+                    Logout
+                </button>
+            </div>
+
+        </mat-toolbar>
+        <div id="main-content">
+            <br><br><br><br>
+
+            <mat-card>
+                <mat-card-title>Scan your member card or type your member card ID</mat-card-title>
+                <br><br><br>
+                <form #searchForm="ngForm">
+                    <mat-form-field>
+                        <mat-label>card ID</mat-label>
+                        <input type="string" name="cardId" matInput [(ngModel)]="cardId">
+                    </mat-form-field>
+                    <button mat-raised-button color="accent" style="margin-left: 10px" (click)="scanCard()">
+                        Try on
+                    </button>
+                    <br>
+                    <button mat-raised-button color="accent" style="margin-left: 190px" (click)="myTryons()">
+                        See past Try ons
+                    </button>
+                </form>
+                <ng-template [ngIf]="errorThrown">
+                    <div id="warning">
+                      <br>Something went wrong! {{handleError.error.message}}!
+                    </div>
+                </ng-template>
+            </mat-card>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

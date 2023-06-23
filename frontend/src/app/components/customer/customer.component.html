@@ -1,0 +1,101 @@
+<mat-sidenav-container color="primary" class="sidenav-container" xmlns="http://www.w3.org/1999/html">
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <span class="pointer" style="padding-left: 20px;" (click)="goToPage('')">Smart Fitting Room</span>
+      <div style="flex: 1 1 auto;"></div>
+      <div style="padding-right:10rem;">
+        <h3 class="pointer" style="font-style: italic" (click)="goToPage(this.loggedin+'/myProfile')">Logged in user: {{this.loggedin}}</h3>
+      </div>
+      <div *ngIf="this.loggedin!='none' || this.loggedin!=''" style="padding-right:5rem;">
+        <button mat-raised-button color="accent" [disabled]="this.loggedin=='none'" (click)="goToPage(this.loggedin+'/myTryons')">
+          MyTryons
+        </button>
+        <button mat-raised-button color="accent" style="margin-left: 5px" [disabled]="this.loggedin=='none'" (click)="goToPage(this.loggedin+'/myPurchases')">
+          MyPurchases
+        </button>
+        <button mat-raised-button color="accent" style="margin-left: 5px" (click)="goToPage(this.loggedin+'/tryon')">
+          Try on
+        </button>
+      </div>
+      <div style="padding-right:2rem;">
+        <button mat-raised-button color="accent" (click)="logout()">
+          Logout
+        </button>
+      </div>
+
+    </mat-toolbar>
+    <div id="main-content">
+      <br><br><br><br>
+
+      <mat-card>
+        <mat-card-title>Update your information</mat-card-title>
+        <br><br><br>
+        <form #searchForm="ngForm">
+          <div class='parent'>
+            <div class='child'>
+              <mat-form-field>
+                <mat-label>firstName</mat-label>
+                <input required type="text" name="firstName" matInput [(ngModel)]="customerResult.firstName">
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <mat-label>lastName</mat-label>
+                <input required type="text" name="lastName" matInput [(ngModel)]="customerResult.lastName">
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <mat-label>phoneNumber</mat-label>
+                <input required type="tel" name="phoneNumber" maxlength="10" matInput
+                       [(ngModel)]="customerResult.phoneNumber">
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <mat-label>email</mat-label>
+                <input required type="email" name="email" matInput [(ngModel)]="customerResult.email">
+              </mat-form-field>
+              <br>
+              <br>
+            </div>
+            <div class='child'>
+              <!--              <mat-label style="font-width: bold;">Address:</mat-label>-->
+              <mat-form-field>
+                <mat-label>street</mat-label>
+                <input required type="text" name="street" matInput [(ngModel)]="customerResult.address.street">
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <mat-label>number</mat-label>
+                <input required type="number" name="number" matInput [(ngModel)]="customerResult.address.number">
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <mat-label>city</mat-label>
+                <input required type="text" name="city" matInput [(ngModel)]="customerResult.address.city">
+              </mat-form-field>
+              <br>
+              <mat-form-field>
+                <mat-label>postCode</mat-label>
+                <input required type="text" name="postCode" matInput [(ngModel)]="customerResult.address.postCode">
+              </mat-form-field>
+              <br>
+              <br>
+            </div>
+          </div>
+
+
+          <button mat-raised-button  color="accent"(click)="update()">
+            Update
+          </button>
+
+        </form>
+        <br><br>
+        <ng-template [ngIf]="this.errorThrown">
+          <div id="warning">
+            {{this.handleError.error.message}}
+          </div>
+        </ng-template>
+
+      </mat-card>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

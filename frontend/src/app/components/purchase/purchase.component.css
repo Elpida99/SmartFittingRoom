@@ -1,0 +1,146 @@
+.sidenav-container {
+  height: 100%;
+  zoom: 100%;
+  background-color: rgba(222, 224, 238, 0.24);
+}
+
+.sidenav {
+  width: 280px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.garmentName {
+  font-family: "Helvetica", sans-serif;
+  font-size: 20px;
+  color: purple;
+  font-weight: bold;
+}
+
+.img {
+  width: 400px;
+  height: auto;
+}
+
+.imgsmall {
+  width: 200px;
+  height: auto;
+}
+
+#main-content {
+  padding: 1%;
+  margin:auto;
+  width: 1300px;
+  /* position: relative; */
+}
+
+
+.my-radio-group {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.my-radio-button {
+  margin-bottom: 10px;
+}
+
+.mytable {
+  alignment: center;
+  margin-left: 150px;
+
+}
+.mytable2 {
+  alignment: center;
+  margin-left: 0;
+  white-space: nowrap;
+  overflow-x:scroll;
+}
+
+.mytableCol {
+  padding: 0 30px;
+}
+
+#messageOptions {
+  display: flex;
+  /* flex-direction: row; */
+}
+
+.messageOptionTitle {
+  color: #364968;
+}
+
+.messageTextarea{
+  width: 1250px;
+  height: 340px;
+  font-size:larger;
+  resize: vertical;
+  border: 3px solid #cccccc44;
+  border-radius: 7px;
+  font-family: Tahoma, sans-serif;
+  /* color: #364968; */
+  background-color: #efefef57;
+  color: rgba(0, 0, 0, 0.849);
+
+
+}
+
+.messageTextarea:hover{
+  outline: none !important;
+  border-color:#364968;
+}
+
+.messageTextarea:focus{
+  border-color:#364968;
+}
+
+
+
+#post-button {
+  margin-right:650px;
+}
+
+.descriPosition {
+  padding: 1%;
+  margin:auto;
+  width: 1300px;
+
+}
+
+#warning {
+  color:red;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+/*td {*/
+/*  overflow-x: auto;*/
+/*}*/
+
+mat-cell,
+mat-header-cell {
+  word-wrap: initial;
+  display: table-cell;
+  /*padding: 0 10px;*/
+  padding: inherit;
+  line-break: unset;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
+  font-weight: bold;
+  color: purple;
+  font-size: larger;
+
+}
+
+mat-row,
+mat-header-row {
+  display: table-row;
+}
+

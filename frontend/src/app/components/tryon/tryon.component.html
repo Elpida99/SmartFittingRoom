@@ -1,0 +1,163 @@
+<mat-sidenav-container color="primary" class="sidenav-container" xmlns="http://www.w3.org/1999/html">
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <span class="pointer" style="padding-left: 20px;" (click)="goToPage('')">Smart Fitting Room</span>
+      <div style="flex: 1 1 auto;"></div>
+      <div style="padding-right:10rem;">
+        <h3 class="pointer" style="font-style: italic" (click)="goToPage(this.loggedin+'/myProfile')">Logged in user: {{this.loggedin}}</h3>
+      </div>
+      <div *ngIf="this.loggedin!='none' || this.loggedin!=''" style="padding-right:5rem;">
+        <button mat-raised-button color="accent" [disabled]="this.loggedin=='none'" (click)="goToPage(this.loggedin+'/myTryons')">
+          MyTryons
+        </button>
+        <button mat-raised-button color="accent" style="margin-left: 5px" [disabled]="this.loggedin=='none'" (click)="goToPage(this.loggedin+'/myPurchases')">
+          MyPurchases
+        </button>
+        <button mat-raised-button color="accent" style="margin-left: 5px" (click)="goToPage(this.loggedin+'/tryon')">
+          Try on
+        </button>
+      </div>
+      <div style="padding-right:2rem;">
+        <button mat-raised-button color="accent" (click)="logout()">
+          Logout
+        </button>
+      </div>
+
+    </mat-toolbar>
+    <div id="main-content">
+      <br><br><br><br>
+
+      <mat-card>
+        <mat-card-title>Welcome to our smart fitting room</mat-card-title>
+        <br><br><br>
+        <form #searchForm="ngForm">
+          <mat-form-field>
+            <mat-label>Scan barcode</mat-label>
+            <input type="string" name="barcode" matInput [(ngModel)]="barcode">
+          </mat-form-field>
+
+          <button style="margin-left: 10px" type="submit" id="post-button" mat-mini-fab
+                  (click)="searchBarcode()"
+                  [disabled]="searchForm.invalid">
+            <mat-icon>search</mat-icon>
+          </button>
+        </form>
+      </mat-card>
+      <mat-accordion>
+        <mat-expansion-panel *ngIf="garmentFound" [expanded]="garmentFound || availClicked"
+                             [disabled]="!garmentFound">
+          <br>
+          <span class="pointer"
+                (click)="goToPage(garment.category.categoryCode + '/category')">Category: {{garment.category.categoryName}}
+            ({{garment.category.categoryCode}})</span>
+          <br><br><br>
+          <table class="mytable">
+
+            <tr>
+              <td>
+                {{getImage(garment.garmentDetails.image)}}
+                <img class="img" [src]=imageUrl>
+                <p>{{garment.description}}</p>
+              </td>
+              <td class="mytableCol">
+                <h3 class="garmentName">{{garment.name}}</h3>
+                <br>
+                <h3>Price:
+                  <ng-template [ngIf]="discount==this.garment.price">
+                    {{garment.price}}
+                  </ng-template>
+                  <ng-template [ngIf]="discount!=this.garment.price">
+                    <span class="price">{{garment.price}} </span>
+                    <span class="discount">{{discount}}</span>
+                  </ng-template>
+                </h3>
+                <br>
+                <h3>Colour: {{garment.garmentDetails.colour.name}}</h3>
+                <p>Available colours: {{this.colours}}</p>
+                <br>
+                <h3>Size: {{garment.garmentDetails.size}}</h3>
+                <p>Available sizes: {{this.sizes}}
+                  <button style="margin-left: 10px" (click)="openDialog()">
+                    Size Guide
+                  </button>
+                </p>
+
+                <br>
+                <h3>Gender: {{garment.targetConsumer}}</h3>
+
+                <h3>Code: {{garment.skuNumber}}</h3>
+                <br>
+                <h3 style="font-weight: bold">Material Blend:</h3>
+                <h3 *ngFor="let mat of material">{{mat.material}}: {{mat.percentage}}%</h3>
+                <br>
+                <!--                TODO: add material-->
+                <button mat-raised-button color="accent" type="submit" (click)="seeAvailability()">See
+                  Availabilty
+                </button>
+                <br>
+              </td>
+            </tr>
+          </table>
+          <table *ngIf="availClicked" mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+            <ng-container matColumnDef="STORE">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header="size"> STORE</th>
+              <td mat-cell *matCellDef="let row"> {{row.storeId}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="SIZE">
+              <th mat-header-cell *matHeaderCellDef> SIZE</th>
+              <td mat-cell *matCellDef="let row"> {{row.size}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="COLOUR">
+              <th mat-header-cell *matHeaderCellDef> COLOUR</th>
+              <td mat-cell *matCellDef="let row"> {{row.colour}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="QUANTITY">
+              <th mat-header-cell *matHeaderCellDef> QUANTITY</th>
+              <td mat-cell *matCellDef="let row"> {{row.quantity}}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </mat-expansion-panel>
+        <!--                </mat-expansion-panel>-->
+        <!--        <ng-template *ngIf="outfits.length!=0">-->
+
+        <ng-template [ngIf]="garmentFound">
+          <div style="overflow: scroll">
+
+            <h3>Pair it with</h3>
+            <table class="mytable2">
+              <tr style="overflow: scroll">
+                <td *ngFor="let gar of outfits" style="padding: 0 100px;">
+                  {{getImage(gar.garmentDetails.image)}}
+                  <img class="imgsmall" [src]=imageUrl>
+                  <h3 style="cursor: pointer" (click)="findGarment(gar.skuNumber)" class="garmentName">{{gar.name}}</h3>
+                  <h3>Price:
+                    <ng-template [ngIf]="gar.garmentDetails.discountPercentage==0">
+                      {{gar.price}}
+                    </ng-template>
+                    <ng-template [ngIf]="gar.garmentDetails.discountPercentage!=0">
+                      <span class="price">{{gar.price}} </span>
+                      <span class="discount">{{getDiscount(gar)}}</span>
+                    </ng-template>
+                  </h3>
+                  <h3>Colour: {{gar.garmentDetails.colour.name}}</h3>
+                  <h3 style="cursor: pointer" (click)="findGarment(gar.skuNumber)">Code: {{gar.skuNumber}}</h3>
+                  <br>
+                  <br>
+                </td>
+              </tr>
+            </table>
+
+          </div>
+        </ng-template>
+        <!--        </ng-template>-->
+      </mat-accordion>
+
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

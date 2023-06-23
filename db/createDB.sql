@@ -1,0 +1,17 @@
+--alter session set "_ORACLE_SCRIPT"=true;
+
+CREATE USER it21735_OWNER
+  WITH PASSWORD it21735_OWNER;
+
+
+DROP DATABASE IF EXISTS it21735_DB;
+
+CREATE DATABASE it21735_DB
+    WITH
+    OWNER = it21735_OWNER
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'en_US.utf8'
+    LC_CTYPE = 'en_US.utf8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;

@@ -1,0 +1,85 @@
+<mat-sidenav-container color="primary" class="sidenav-container" xmlns="http://www.w3.org/1999/html">
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <span class="pointer" style="padding-left: 20px;" (click)="goToPage('')">Smart Fitting Room</span>
+            <div style="flex: 1 1 auto;"></div>
+            <div style="padding-right:2rem;">
+            </div>
+
+        </mat-toolbar>
+        <div id="main-content">
+            <br><br><br><br>
+
+            <mat-card>
+                <mat-card-title>Register</mat-card-title>
+                <br><br><br>
+                <form #searchForm="ngForm">
+                    <div class='parent'>
+                        <div class='child'>
+                            <mat-form-field>
+                                <mat-label>firstName</mat-label>
+                                <input required type="text" name="firstName" matInput [(ngModel)]="firstName">
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field>
+                                <mat-label>lastName</mat-label>
+                                <input required type="text" name="lastName" matInput [(ngModel)]="lastName">
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field>
+                                <mat-label>phoneNumber</mat-label>
+                                <input required type="tel" name="phoneNumber" maxlength="10" matInput
+                                       [(ngModel)]="phoneNumber">
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field>
+                                <mat-label>email</mat-label>
+                                <input required type="email" name="email" matInput [(ngModel)]="email">
+                            </mat-form-field>
+                            <br>
+                            <br>
+                        </div>
+                        <div class='child'>
+                            <!--              <mat-label style="font-width: bold;">Address:</mat-label>-->
+                            <mat-form-field>
+                                <mat-label>street</mat-label>
+                                <input required type="text" name="street" matInput [(ngModel)]="street">
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field>
+                                <mat-label>number</mat-label>
+                                <input required type="number" name="number" matInput [(ngModel)]="number">
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field>
+                                <mat-label>city</mat-label>
+                                <input required type="text" name="city" matInput [(ngModel)]="city">
+                            </mat-form-field>
+                            <br>
+                            <mat-form-field>
+                                <mat-label>postCode</mat-label>
+                                <input required type="text" name="postCode" matInput [(ngModel)]="postCode">
+                            </mat-form-field>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+
+
+                    <button mat-raised-button [disabled]="!firstName || !lastName || !street || !number || !phoneNumber || !city || !postCode || !email" color="accent" (click)="register()">
+                        Submit
+                    </button>
+
+                </form>
+                <br><br>
+                <ng-template [ngIf]="this.errorThrown">
+                    <div id="warning">
+                      Something wnet wrong! <br>
+                        {{this.handleError.error.message}}
+                    </div>
+                </ng-template>
+
+            </mat-card>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

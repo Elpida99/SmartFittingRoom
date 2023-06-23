@@ -1,0 +1,58 @@
+<mat-sidenav-container color="primary" class="sidenav-container" xmlns="http://www.w3.org/1999/html">
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <span class="pointer" style="padding-left: 20px;" (click)="goToPage('')">Smart Fitting Room</span>
+      <div style="flex: 1 1 auto;"></div>
+      <div style="padding-right:10rem;">
+        <h3 class="pointer" style="font-style: italic" (click)="goToPage(this.loggedin+'/myProfile')">Logged in user: {{this.loggedin}}</h3>
+      </div>
+      <div *ngIf="this.loggedin!='none' || this.loggedin!=''" style="padding-right:5rem;">
+        <button mat-raised-button color="accent" [disabled]="this.loggedin=='none'" (click)="goToPage(this.loggedin+'/myTryons')">
+          MyTryons
+        </button>
+        <button mat-raised-button color="accent" style="margin-left: 5px" [disabled]="this.loggedin=='none'" (click)="goToPage(this.loggedin+'/myPurchases')">
+          MyPurchases
+        </button>
+        <button mat-raised-button color="accent" style="margin-left: 5px" (click)="goToPage(this.loggedin+'/tryon')">
+          Try on
+        </button>
+      </div>
+      <div style="padding-right:2rem;">
+        <button mat-raised-button color="accent" (click)="logout()">
+          Logout
+        </button>
+      </div>
+
+    </mat-toolbar>
+    <div id="main-content">
+      <br><br><br><br>
+
+      <mat-card>
+        <!--
+        -->
+        <table *ngFor="let purchase of pos" class="mytable">
+
+          <tr>
+            <td><h2>Date: {{purchase.date}}</h2></td>
+<!--            <td><h2>Date: {{purchase.date.toString().split('T')[0]}}</h2></td>-->
+<!--            <td><h2>Time: {{purchase.date.toString().split('T')[1].split('.')[0]}}</h2></td>-->
+            <td><h2>Store: {{purchase.storeName}}</h2></td>
+          <tr>
+
+            <td class="mytableCol">
+
+              <!--              <h3 style="font-weight: bold">Material Blend:</h3>-->
+              <h3 *ngFor="let bar of purchase.barcodes">{{bar}}</h3>
+              <!--              <br>-->
+              <br>
+            </td>
+          </tr>
+          <!--                        <ng-template *ngFor="let garment of tryon.garments">-->
+          <!--                            -->
+          <!--                        </ng-template>-->
+        </table>
+      </mat-card>
+
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

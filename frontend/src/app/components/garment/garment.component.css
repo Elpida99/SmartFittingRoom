@@ -1,0 +1,92 @@
+.sidenav-container {
+  height: 100%;
+  zoom: 100%;
+  background-color: rgba(222, 224, 238, 0.24);
+}
+
+.sidenav {
+  width: 280px;
+}
+
+.garmentName {
+  font-family: "Helvetica", sans-serif;
+  font-size: 20px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.img {
+  width: 400px;
+  height: auto;
+}
+
+#main-content {
+  padding: 1%;
+  margin:auto;
+  width: 1300px;
+  /* position: relative; */
+}
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  margin-right: 10rem;
+
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+#messageOptions {
+  display: flex;
+  /* flex-direction: row; */
+}
+
+.messageOptionTitle {
+  color: #364968;
+}
+
+.messageTextarea{
+  width: 1250px;
+  height: 340px;
+  font-size:larger;
+  resize: vertical;
+  border: 3px solid #cccccc44;
+  border-radius: 7px;
+  font-family: Tahoma, sans-serif;
+  /* color: #364968; */
+  background-color: #efefef57;
+  color: rgba(0, 0, 0, 0.849);
+
+
+}
+
+.messageTextarea:hover{
+  outline: none !important;
+  border-color:#364968;
+}
+
+.messageTextarea:focus{
+  border-color:#364968;
+}
+
+
+
+#post-button {
+  margin-right:650px;
+}
+
+.descriPosition {
+  margin-left:5px;
+
+}
+
+#warning {
+  color:red;
+}
+
+

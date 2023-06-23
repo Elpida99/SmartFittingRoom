@@ -1,0 +1,117 @@
+<mat-sidenav-container color="primary" class="sidenav-container">
+<!--  <mat-sidenav color="primary" #drawer class="sidenav" fixedInViewport-->
+<!--               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"-->
+<!--               [mode]="(isHandset$ | async) ? 'over' : 'side'"-->
+<!--               [opened]="(isHandset$ | async) === false">-->
+<!--    <app-sidenav></app-sidenav>-->
+<!--  </mat-sidenav>-->
+  <mat-sidenav-content>
+    <mat-toolbar id="toolbaraki" color="primary">
+<!--      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">-->
+<!--        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>-->
+<!--      </button>-->
+      <span class="pointer" style="padding-left: 20px;" (click)="goToPage('') ">Smart Fitting Room</span>
+      <div style="flex: 1 1 auto;"></div>
+      <div style="padding-right:2rem;">
+
+        <button mat-raised-button color="accent" (click)="openDialog()">
+          Size Guide
+        </button>
+
+      </div>
+
+
+    </mat-toolbar>
+    <div id="main-content">
+      <mat-accordion multi>
+        <mat-expansion-panel [expanded]="garmentSearch != ''"
+                             (opened)="garmentSearch != ''">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="descriPosition"> Scan the barcode or search:</mat-panel-title>
+          </mat-expansion-panel-header>
+          <div id="messageOptions">
+
+            <br><br>
+
+            <br>
+            <form #searchForm="ngForm">
+              <mat-form-field>
+                <mat-label>barcode/sku/name/code</mat-label>
+                <input type="string" name="garment" matInput [(ngModel)]="garmentSearch">
+              </mat-form-field>
+            </form>
+            <button type="submit" id="post-button" mat-mini-fab (click)="submitSearch()"
+                    [disabled]="searchForm.invalid">
+              <mat-icon>search</mat-icon>
+            </button>
+
+          </div>
+        </mat-expansion-panel>
+
+
+        <!--                 ResultsExpansion Panel-->
+        <mat-expansion-panel [expanded]="garments!=[]">
+
+          <mat-expansion-panel-header>
+            <mat-panel-title class="descriPosition">Garments
+            </mat-panel-title>
+            <mat-panel-description></mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <mat-card *ngFor="let garment of garments">
+            <!--                <span style="font-size: larger;-->
+            <!--               ">{{results}}-->
+            <!--                </span>-->
+
+            <table>
+              <tr>
+                <td>
+                  <h3 class="garmentName">{{garment.name}}</h3>
+                </td>
+                <td>
+                  <h3>{{garment.price}}</h3>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h3>{{garment.description}}</h3>
+                </td>
+                <td>
+                  <h3>{{garment.category.categoryName}} ({{garment.category.categoryCode}})</h3>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h3>{{garment.garmentDetails.size}}, {{garment.garmentDetails.colour.name}} ({{garment.garmentDetails.colour.code}})</h3>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h3>{{garment.targetConsumer}}</h3>
+                </td>
+                <td>
+                  <h3>{{garment.skuNumber}}</h3>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {{getImage(garment.garmentDetails.image)}}
+                  <img class="img" [src]=imageUrl>
+                </td>
+              </tr>
+            </table>
+
+            <!--              <li>-->
+            <!--                {{garment.material.cotton}}, {{garment.material.leather}}, {{garment.material.silk}}, {{garment.material.viscose}}, {{garment.material.wool}}-->
+            <!--              </li>-->
+
+          </mat-card>
+
+
+        </mat-expansion-panel>
+
+
+      </mat-accordion>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
