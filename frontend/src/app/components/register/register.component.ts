@@ -19,6 +19,7 @@ export class RegisterComponent implements OnInit {
   username = "";
   handleError;
   errorThrown = false;
+  created = false;
 
   ngOnInit(): void {
   }
@@ -52,6 +53,7 @@ export class RegisterComponent implements OnInit {
   async register() {
     this.handleError = null;
     this.errorThrown = false;
+    this.created = false;
     this.address = new Address(this.street, this.number, this.city, this.postCode);
     this.customer = new Customer(this.firstName, this.lastName, this.phoneNumber, this.email, this.address);
 
@@ -60,7 +62,10 @@ export class RegisterComponent implements OnInit {
     requestParams = requestParams.append('Content-Type', 'application/json');
 
     try {
-      await this.service.postUserInput(this.customer);
+      this.customerResult = await this.service.postUserInput(this.customer);
+      if(this.customerResult!=null) {
+        this.created = true;
+      }
     } catch (ex) {
       this.handleError = ex;
       console.log("HANDLE")
@@ -72,22 +77,9 @@ export class RegisterComponent implements OnInit {
     }
 
     if (this.errorThrown == false) {
-      this.goToPage('');
+      this.created = true;
+    //  this.goToPage('');
     }
-    // this.handleError = this.service.handleError;
-
-    // this.service.register(body, requestParams).subscribe(data => {
-    //   console.log("response");
-    //   console.log(data);
-    //   this.customerResult = data;
-    //   if(data!=null) {
-    //     console.log(this.customerResult)
-    //     // this.goToPage('/'+this.username+'/tryon');
-    //   }
-    // },error => {
-    //   this.handleError = error.toString();
-    //   this.errorThrown = true;
-    // });
 
 
   }

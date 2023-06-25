@@ -72,9 +72,15 @@
 
                 </form>
                 <br><br>
+              <ng-template [ngIf]="this.created">
+                <div>
+                  User created with id:
+                  {{this.customerResult.id}}
+                </div>
+              </ng-template>
                 <ng-template [ngIf]="this.errorThrown">
                     <div id="warning">
-                      Something wnet wrong! <br>
+                      Something went wrong! <br>
                         {{this.handleError.error.message}}
                     </div>
                 </ng-template>
