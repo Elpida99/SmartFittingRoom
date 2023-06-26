@@ -32,7 +32,7 @@
         -->
         <table *ngFor="let purchase of pos" class="mytable">
 
-          <tr>
+          <tr *ngFor="let purchase of pos">
             <td><h2>Date: {{purchase.date}}</h2></td>
 <!--            <td><h2>Date: {{purchase.date.toString().split('T')[0]}}</h2></td>-->
 <!--            <td><h2>Time: {{purchase.date.toString().split('T')[1].split('.')[0]}}</h2></td>-->

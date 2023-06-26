@@ -1,33 +1,33 @@
-//package hua.it21735.thesis.db;
-//
-//import hua.it21735.thesis.persistence.dao.*;
-//import hua.it21735.thesis.persistence.model.*;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-//import org.springframework.boot.CommandLineRunner;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//
-//import java.io.File;
-//import java.nio.file.Files;
-//import java.time.LocalDateTime;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//@Configuration
-//public class SaveDummyData {
-//
-//    Logger log = LoggerFactory.getLogger(SaveDummyData.class);
-//
-//
-//    @Bean
-//    public CommandLineRunner loadData(CategoryDao categoryDao, ColorDao colorDao, SizeDao sizeDao, MaterialDao materialDao, GarmentDao garmentDao,
-//                                      CustomerDao customerDao, AddressDao addressDao, StoreDao storeDao, PurchaseDetailsDao purchaseDetailsDao,
-//                                      StoreInventoryDao storeInventoryDao, PointOfSaleDao pointOfSaleDao, RecommendationDao recommendationDao
-//    ) {
-//        return (args) -> {
-//
-//            //save store address
+package hua.it21735.thesis.db;
+
+import hua.it21735.thesis.persistence.dao.*;
+import hua.it21735.thesis.persistence.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Configuration
+public class SaveDummyData {
+
+    Logger log = LoggerFactory.getLogger(SaveDummyData.class);
+
+
+    @Bean
+    public CommandLineRunner loadData(CategoryDao categoryDao, ColorDao colorDao, SizeDao sizeDao, MaterialDao materialDao, GarmentDao garmentDao,
+                                      CustomerDao customerDao, AddressDao addressDao, StoreDao storeDao, PurchaseDetailsDao purchaseDetailsDao,
+                                      StoreInventoryDao storeInventoryDao, PointOfSaleDao pointOfSaleDao, RecommendationDao recommendationDao
+    ) {
+        return (args) -> {
+
+            //save store address
 //            Address storeAddress = new Address();
 //            storeAddress.setCity("Athens");
 //            storeAddress.setNumber("47");
@@ -159,7 +159,7 @@
 //            System.out.println("double2jean");
 //            garmentDao.save(jacket);
 ////
-////            recommendationDao.save(new Recommendation("2", garmentJeans.getSkuNumber()));
+//            recommendationDao.save(new Recommendation("2", garmentJeans.getSkuNumber()));
 //            recommendationDao.save(new Recommendation("2", jacket.getSkuNumber()));
 ////
 ////            File image2 = new File("D:/THESIS/blackJeans.jpg");
@@ -294,39 +294,52 @@
 //            storeInventoryDao.save(storeInventory3);
 //            storeInventoryDao.save(storeInventory4);
 //            storeInventoryDao.save(storeInventory5);
-//
+
 //            List<PurchaseDetails> details = new ArrayList<>();
 //            PurchaseDetails purchaseDetails = new PurchaseDetails();
-//            purchaseDetails.setProduct(garment);
+//            purchaseDetails.setProduct(garmentDao.findAll().get(0));
 //            purchaseDetails.setPrice();
 //
 //            PurchaseDetails purchaseDetails1 = new PurchaseDetails();
-//            purchaseDetails1.setProduct(garment3);
+//            purchaseDetails1.setProduct(garmentDao.findAll().get(4));
 //            purchaseDetails1.setPrice();
+//
+//            PurchaseDetails purchaseDetails2 = new PurchaseDetails();
+//            purchaseDetails2.setProduct(garmentDao.findAll().get(4));
+//            purchaseDetails2.setPrice();
+//
+//            PurchaseDetails purchaseDetails3 = new PurchaseDetails();
+//            purchaseDetails3.setProduct(garmentDao.findAll().get(4));
+//            purchaseDetails3.setPrice();
+//
 //            details.add(purchaseDetails);
 //            details.add(purchaseDetails1);
+//            details.add(purchaseDetails2);
+//            details.add(purchaseDetails3);
 //            purchaseDetailsDao.save(purchaseDetails);
 //            purchaseDetailsDao.save(purchaseDetails1);
+//            purchaseDetailsDao.save(purchaseDetails2);
+//            purchaseDetailsDao.save(purchaseDetails3);
 //
 //
 //            PointOfSale pos = new PointOfSale();
-//            pos.setStore(store);
+//            pos.setStore(storeDao.findAll().get(0));
 //            pos.setDate(LocalDateTime.now());
-//            pos.setCustomer(customer);
+//      //      pos.setCustomer(customer);
 //            pos.setStatus(StatusEnum.PENDING);
 //            pos.setDetails(details);
 //
 //            pointOfSaleDao.save(pos);
-//
-////            recommendationDao.save(new Recommendation("1", garment.getSkuNumber()));
+
+//            recommendationDao.save(new Recommendation("1", garment.getSkuNumber()));
 //            recommendationDao.save(new Recommendation("2", garment.getSkuNumber()));
 //            recommendationDao.save(new Recommendation("1", garment1.getSkuNumber()));
 //            recommendationDao.save(new Recommendation("1", garment3.getSkuNumber()));
 //            recommendationDao.save(new Recommendation("3", test.getSkuNumber()));
 //            recommendationDao.save(new Recommendation("3", test2.getSkuNumber()));
 ////
-////
-//        };
-//    }
 //
-//}
+        };
+    }
+
+}

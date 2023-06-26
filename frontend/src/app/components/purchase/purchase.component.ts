@@ -33,7 +33,7 @@ export class PurchaseComponent implements OnInit {
 
   loggedin;
   customer;
-  pos: PurchaseJpo[];
+  pos = [];
 
   ngOnInit(): void {
      this.getMyPurchases();
@@ -46,8 +46,12 @@ export class PurchaseComponent implements OnInit {
     requestParams = requestParams.append('customer', 'papadkon@gmail.com');
     this.purchaseService.getByCustomer(requestParams).subscribe(data => {
         console.log(data);
-      this.pos.push(data);
+       // this.pos = data;
+       this.pos.push(data);
+      console.log("pos[0]");
       console.log(this.pos[0]);
+      console.log("pos");
+      console.log(this.pos);
     });
   }
 

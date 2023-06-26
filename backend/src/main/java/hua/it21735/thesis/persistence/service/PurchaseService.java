@@ -73,6 +73,25 @@ public class PurchaseService {
         return null;
     }
 
+    public float getAveragePrice(String code) {
+        List<PointOfSale> all = findAll();
+        List<Float> prices = new ArrayList<>();
+        float average = 0;
+        for (PointOfSale pos : all) {
+            List<PurchaseDetails> details = pos.getDetails();
+            for (PurchaseDetails d : details) {
+                if (d.getProduct().getCode().equals(code)) {
+                    prices.add(d.getPrice());
+                }
+            }
+        }
+        for (float price : prices) {
+            average += price;
+        }
+
+        return average / prices.size();
+    }
+
     @Transactional
     public List<PointOfSale> findbyCustomer(String email) {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>.email = " + email);
@@ -109,7 +128,7 @@ public class PurchaseService {
         jpo.setStoreName(pos.getStore().getName());
         jpo.setCustomerEmail(pos.getCustomer().getEmail());
         List<PurchaseDetails> details = pos.getDetails();
-        for(PurchaseDetails detail : details) {
+        for (PurchaseDetails detail : details) {
             jpo.getBarcodes().put(detail.getProduct().getBarcode(), detail.getPrice());
         }
 

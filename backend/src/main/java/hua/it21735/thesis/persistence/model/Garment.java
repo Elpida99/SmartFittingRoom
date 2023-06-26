@@ -11,38 +11,40 @@ import java.util.Random;
         @NamedQuery(name = "Garment.findBySkuNumber", query = "select g from Garment g where g.skuNumber = :skuNumber"),
         @NamedQuery(name = "Garment.findByCode", query = "select g from Garment g where g.code = :code")
 })
-//@SequenceGenerator(name = "GARMENT_SEQ", sequenceName = "garment_sequence", allocationSize = 1, initialValue = 1)
 public class Garment {
 
 
-    //    @Column(name = "garment_id")
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GARMENT_SEQ")
-//    private Long id;
     @Column(name = "name")
     private String name;
+
     @Column(name = "garmentCode")
     private String code;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "price")
     private float price;
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "category_id")
     private Category category;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "garment_details_id")
     private GarmentDetails garmentDetails;
+
     @Column(name = "target_consumer")
     @Enumerated(EnumType.STRING)
     private TargetConsumer targetConsumer;
-    //    @OneToOne
-//    @JoinColumn(name = "material_id")
-//    private Material material;
+
     @Id
     @Column(name = "barcode")
     private Long barcode;
+
     @Column(name = "skuNumber")
     private String skuNumber;
+
     @Column(name = "isActive")
     private boolean isActive = true;
 
@@ -53,14 +55,12 @@ public class Garment {
                    float price, Category category,
                    GarmentDetails garmentDetails,
                    TargetConsumer targetConsumer) {
-        // Material material) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
         this.garmentDetails = garmentDetails;
         this.targetConsumer = targetConsumer;
-//        this.material = material;
     }
 
     @PrePersist
@@ -100,14 +100,7 @@ public class Garment {
     public void setPrice(float price) {
         this.price = price;
     }
-//
-//    public Material getMaterial() {
-//        return material;
-//    }
-//
-//    public void setMaterial(Material material) {
-//        this.material = material;
-//    }
+
 
     public TargetConsumer getTargetConsumer() {
         return targetConsumer;

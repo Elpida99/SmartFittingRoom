@@ -24,7 +24,7 @@ export class AdminComponent {
     this.http.get(fileUrl, {responseType: 'blob'}).subscribe((response: Blob) => {
       const downloadLink = document.createElement('a');
       downloadLink.href = URL.createObjectURL(response);
-      downloadLink.download = 'data.xlsx';
+      downloadLink.download = 'garmentStatistics.xlsx';
       downloadLink.click();
     });
   }

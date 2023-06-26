@@ -36,7 +36,7 @@ public class AdminResource {
 
         xlsxService.mainMethod();
 
-        File file = new File("/mnt/d/THESIS/FittingRoomApp/data.xlsx");
+        File file = new File(System.getProperty("user.dir") + "/garmentStatistics.xlsx");
 
         InputStreamResource resource = null;
         try {
@@ -46,7 +46,7 @@ public class AdminResource {
         }
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=data.xlsx");
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=garmentStatistics.xlsx");
 
         MediaType mediaType = MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
