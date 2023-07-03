@@ -1,14 +1,11 @@
 package hua.it21735.thesis.persistence.service;
 
-import hua.it21735.thesis.persistence.model.Garment;
-import hua.it21735.thesis.persistence.model.PointOfSale;
-import hua.it21735.thesis.persistence.model.PurchaseDetails;
-import hua.it21735.thesis.persistence.model.TryOn;
+import hua.it21735.thesis.persistence.dao.StoreInventoryDao;
+import hua.it21735.thesis.persistence.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +20,10 @@ public class StatisticsService {
     private TryOnService tryOnService;
     @Autowired
     private PurchaseService purchaseService;
+    @Autowired
+    private CustomerService customerService;
+    @Autowired
+    private StoreInventoryDao storeInventoryDao;
 
     @Transactional
     public Map<String, Long> getPopularGarments() {
@@ -80,23 +81,23 @@ public class StatisticsService {
 
     }
 
-    public Map<String,Integer> getGarmentSales() {
+    public Map<String, Integer> getGarmentSales() {
         List<PointOfSale> sales = purchaseService.findAll();
-        Map<String,Integer> codes = new HashMap<>();
-        Map<String,Integer> avPrice = new HashMap<>();
+        Map<String, Integer> codes = new HashMap<>();
+        Map<String, Integer> avPrice = new HashMap<>();
 
-        for(PointOfSale sale : sales) {
+        for (PointOfSale sale : sales) {
 
             List<String> collect = sale.getDetails().stream().map(PurchaseDetails::getProduct).map(Garment::getCode).collect(Collectors.toList());
-            for(String c : collect) {
-                if(codes.containsKey(c)) {
+            for (String c : collect) {
+                if (codes.containsKey(c)) {
                     codes.put(c, codes.get(c) + 1);
-                }else {
+                } else {
                     codes.put(c, 1);
                 }
             }
         }
-        Map<String,Integer> finalcodes = new HashMap<>();
+        Map<String, Integer> finalcodes = new HashMap<>();
         for (Map.Entry<String, Integer> entry : codes.entrySet()) {
             List<Garment> byCode = garmentService.findByCode(entry.getKey());
             if (!byCode.isEmpty()) {
@@ -106,11 +107,49 @@ public class StatisticsService {
         }
 
 
-
         return finalcodes;
 
     }
 
-//    public void getSales
+    public Map<String, Integer[]> getCustomerSales() {
+        Map<String, Integer[]> result = new HashMap<>();
+
+        List<Customer> customers = customerService.findAll();
+        for (Customer c : customers) {
+            int countOfTryons = tryOnService.getTryOnsByCustomer(c.getId()).size();
+            int countOfPos = purchaseService.getPurchasesByCustomer(c.getId()).size();
+
+            String key = c.getId() + "__" + c.getFirstName() + " " + c.getLastName() + "__" + c.getPhoneNumber();
+            Integer[] counts = new Integer[2];
+            counts[0] = countOfTryons;
+            counts[1] = countOfPos;
+
+            result.put(key, counts);
+        }
+
+        return result;
+    }
+
+    public Map<String, Integer> getInventory() {
+        List<StoreInventory> storeInventory = storeInventoryDao.findAll();
+        Map<String, Integer> result = new HashMap<>();
+
+        for (StoreInventory si : storeInventory) {
+            String skuNumber = si.getGarment().getSkuNumber();
+            String storeName = si.getStore().getName();
+            String key = storeName + "__" + skuNumber;
+
+            if (result.containsKey(key)) {
+                result.put(key, result.get(key) + 1);
+            }
+            result.put(key, 1);
+        }
+
+        return result;
+    }
+
+    public void getMemberData() {
+
+    }
 
 }

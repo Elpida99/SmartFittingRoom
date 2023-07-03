@@ -103,23 +103,6 @@ public class PurchaseService {
         return null;
     }
 
-//    public PointOfSale toPointOfSaleJpo(PurchaseJpo jpo) {
-//        PointOfSale pos = new PointOfSale();
-//        pos.setStore(storeService.getByName(jpo.getStoreName()));
-//        pos.setCustomer(customerService.getByEmail(jpo.getCustomerEmail()));
-//        pos.setStatus(jpo.getStatus());
-//        pos.setDate(jpo.getDate());
-//
-//        List<PurchaseDetails> details = new ArrayList<>();
-//        for(Long barcode : jpo.getBarcodes()) {
-//            PurchaseDetails d = new PurchaseDetails();
-//            d.setProduct(garmentService.findByBarcode(barcode));
-//            d.setPrice();
-//        }
-//        pos.setDetails(details);
-//        return pos;
-//    }
-
     @Transactional
     public PurchaseJpo toPurchaseJpo(PointOfSale pos) {
         PurchaseJpo jpo = new PurchaseJpo();
@@ -133,5 +116,14 @@ public class PurchaseService {
         }
 
         return jpo;
+    }
+
+    public List<PointOfSale> getPurchasesByCustomer(Long id) {
+
+        Customer customer = customerService.getById(id);
+        System.out.println("customer = " + customer.toString());
+        List<PointOfSale> byCustomer = pointOfSaleDao.findbyCustomer(customer);
+        System.out.println("byCustomer = " + byCustomer.toString());
+        return byCustomer;
     }
 }
