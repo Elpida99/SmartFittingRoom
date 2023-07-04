@@ -126,4 +126,15 @@ public class PurchaseService {
         System.out.println("byCustomer = " + byCustomer.toString());
         return byCustomer;
     }
+
+    public Integer getPurchasesRevenueByCustomer(Long id) {
+
+        int revenue = 0;
+        List<PointOfSale> byCustomer = getPurchasesByCustomer(id);
+        for (PointOfSale pos : byCustomer) {
+            revenue += pos.getDetails().stream().map(PurchaseDetails::getPrice).reduce(0.0F, Float::sum);
+        }
+
+        return revenue;
+    }
 }

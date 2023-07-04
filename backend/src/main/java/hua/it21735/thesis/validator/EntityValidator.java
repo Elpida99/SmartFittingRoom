@@ -24,17 +24,4 @@ public class EntityValidator {
         }
     }
 
-    public void validateCategory(Category category) {
-        //todo
-        //unique name, code + null id
-    }
-
-    public void validateColour(Colour colour) {
-        //todo
-        //unique code
-        //check that it does not already exist
-    }
-
-    public void validateCustomer(Customer customer) {
-    }
 }

@@ -18,7 +18,7 @@ public class ColorService {
     private EntityValidator entityValidator;
 
     public Long save(Colour colour) {
-        entityValidator.validateColour(colour);
+//        entityValidator.validateColour(colour);
         if (getByCode(colour.getCode()) != null) {
             throw new IllegalStateException("Color code already exists");
         }

@@ -23,7 +23,7 @@ public class CustomerService {
     private EntityValidator entityValidator;
 
     public Long save(Customer customer) {
-        entityValidator.validateCustomer(customer);
+//        entityValidator.validateCustomer(customer);
 
         Customer emailFound = getByEmail(customer.getEmail());
         if (emailFound != null) {

@@ -19,13 +19,12 @@ public class CategoryService {
     private EntityValidator entityValidator;
 
     public Long save(Category category) {
-        entityValidator.validateCategory(category);
+//        entityValidator.validateCategory(category);
         Category saved = categoryDao.save(category);
 
         return saved.getId();
     }
 
-    //todo update
 
     public Category getById(Long id) {
         Optional<Category> categoryOptional = categoryDao.findById(id);

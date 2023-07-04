@@ -44,14 +44,6 @@ public class GarmentResource {
     }
 
     @GetMapping
-    @RequestMapping(path = "/get/id")
-    public ResponseEntity<Garment> getGarmentById(@RequestParam("id") Long id) {
-
-        Garment garment = garmentService.findById(id);
-        return garment != null ? ResponseEntity.ok(garment) : ResponseEntity.badRequest().build();
-    }
-
-    @GetMapping
     @RequestMapping(path = "/get/barcode")
     public ResponseEntity<Garment> getGarmentByBarcode(@RequestParam("barcode") String barcode) {
 

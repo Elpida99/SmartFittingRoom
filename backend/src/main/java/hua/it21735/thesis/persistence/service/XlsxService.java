@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -30,6 +31,7 @@ public class XlsxService {
             saveSalesStatistics(workbook);
             saveCustomerSales(workbook);
             saveInventoryStatistics(workbook);
+            saveCustomerInfoStatistics(workbook);
             try (FileOutputStream fileOut = new FileOutputStream("garmentStatistics.xlsx")) {
                 workbook.write(fileOut);
                 System.out.println("Excel file created successfully.");
@@ -224,6 +226,47 @@ public class XlsxService {
             row.createCell(1).setCellValue(garmentSKU);
             row.createCell(2).setCellValue(garmentName);
             row.createCell(3).setCellValue(entry.getValue());
+
+        }
+
+        sheet.autoSizeColumn(0);
+        sheet.autoSizeColumn(1);
+        sheet.autoSizeColumn(2);
+        sheet.autoSizeColumn(3);
+
+
+    }
+
+    public void saveCustomerInfoStatistics(Workbook workbook) {
+
+        System.out.println("XlsxService.saveCustomerInfoStatistics");
+        Map<String, List<Integer>> customerInfo = service.getCustomerInfo();
+
+        Sheet sheet = workbook.createSheet("Δημογραφικά στοιχεία");
+
+        // Create header row
+        Row headerRow = sheet.createRow(0);
+        Cell h1 = headerRow.createCell(0);
+        h1.setCellValue("City");
+        Cell h2 = headerRow.createCell(1);
+        h2.setCellValue("Total Customers");
+        Cell h3 = headerRow.createCell(2);
+        h3.setCellValue("Total Tryons");
+        Cell h4 = headerRow.createCell(3);
+        h4.setCellValue("Total Purchase Revenue");
+
+
+        for (Map.Entry<String, List<Integer>> entry : customerInfo.entrySet()) {
+
+            Row row = sheet.createRow(sheet.getLastRowNum() + 1);
+
+
+            String city = entry.getKey();
+
+            row.createCell(0).setCellValue(city);
+            row.createCell(1).setCellValue(entry.getValue().get(0));
+            row.createCell(2).setCellValue(entry.getValue().get(1));
+            row.createCell(3).setCellValue(entry.getValue().get(2));
 
         }
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -152,4 +153,23 @@ public class StatisticsService {
 
     }
 
+    public Map<String, List<Integer>> getCustomerInfo() {
+        List<Customer> all = customerService.findAll();
+        List<String> collect = all.stream().map(Customer::getAddress).map(Address::getCity).distinct().collect(Collectors.toList());
+        Map<String, List<Integer>> result = new HashMap<>();
+        for (String city : collect) {
+            List<Customer> customersCity =
+                    all.stream().filter(customer -> customer.getAddress().getCity().equals(city)).collect(Collectors.toList());
+            int countOfTryonsPerCity = 0;
+            int countOfPosPerCity = 0;
+            for (Customer c : customersCity) {
+                countOfTryonsPerCity += tryOnService.getTryOnsByCustomer(c.getId()).size();
+//                countOfPosPerCity += purchaseService.getPurchasesByCustomer(c.getId()).size();
+                countOfPosPerCity += purchaseService.getPurchasesRevenueByCustomer(c.getId());
+            }
+            result.put(city, Arrays.asList(customersCity.size(), countOfTryonsPerCity, countOfPosPerCity));
+        }
+
+        return result;
+    }
 }

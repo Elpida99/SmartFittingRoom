@@ -1,3 +1,0 @@
-barcode = universal code for product type (colour and size? or garment?)
-product code = garment unique code and then for stock = garment code + colour + size
-category = has a code that can be used to search products under this category
