@@ -144,12 +144,15 @@ public class GarmentService {
     public List<StoreAvailabilityJpo> getGarmentAvailability(Long barcode) {
         List<StoreAvailabilityJpo> storeAvailabilityJpos = new ArrayList<>();
         Garment garment = findByBarcode(barcode);
-        List<String> colours_sizes = new ArrayList<>();
-        List<String> colours_sizes_counted = new ArrayList<>();
+//        List<String> colours_sizes = new ArrayList<>();
+//        List<String> colours_sizes_counted = new ArrayList<>();
         List<String> storesIds = storeService.findAll().stream().map(Store::getName).distinct().collect(Collectors.toList());
 
         if (garment != null) {
             for (String storeId : storesIds) {
+                List<String> colours_sizes = new ArrayList<>();
+                List<String> colours_sizes_counted = new ArrayList<>();
+                System.out.println("storeId = " + storeId);
                 List<StoreInventory> storeInventory = storeService.getInventory(storeId);
                 List<StoreInventory> list =
                         storeInventory.stream().filter(storeInventory1 -> storeInventory1.getGarment().getSkuNumber().split("-")[1].equals(garment.getSkuNumber().split("-")[1])).collect(Collectors.toList());
@@ -158,7 +161,7 @@ public class GarmentService {
 
                     GarmentDetails gd = l.getGarment().getGarmentDetails();
                     colours_sizes.add(gd.getColour().getName() + "_" + gd.getSize());
-//                storeAvailabilityJpos.add(new StoreAvailabilityJpo(storeId, gd.getSize(), gd.getColour().getName(), 1));
+               // storeAvailabilityJpos.add(new StoreAvailabilityJpo(storeId, gd.getSize(), gd.getColour().getName(), 1));
                 }
                 for (String cs : colours_sizes) {
                     if (!colours_sizes_counted.contains(cs)) {

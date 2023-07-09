@@ -31,6 +31,13 @@ public class Store {
     public Store() {
     }
 
+    public Store(String name, Address address, String phoneNumber, String email) {
+        this.name = name;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
     public Store(String name) {
         this.name = name;
     }

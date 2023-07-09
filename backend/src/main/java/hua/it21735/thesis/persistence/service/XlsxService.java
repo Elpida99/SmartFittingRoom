@@ -23,7 +23,6 @@ public class XlsxService {
     @Autowired
     GarmentService garmentService;
 
-
     public void mainMethod() {
         try (Workbook workbook = new XSSFWorkbook()) {
             savePopularGarments(workbook);

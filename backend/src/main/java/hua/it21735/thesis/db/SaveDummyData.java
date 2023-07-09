@@ -8,6 +8,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.transaction.Transactional;
+import java.io.File;
+import java.nio.file.Files;
+import java.util.List;
 import java.util.Random;
 
 @Configuration
@@ -19,8 +23,8 @@ public class SaveDummyData {
     @Bean
     public CommandLineRunner loadData(CategoryDao categoryDao, ColorDao colorDao, SizeDao sizeDao, MaterialDao materialDao, GarmentDao garmentDao,
                                       CustomerDao customerDao, AddressDao addressDao, StoreDao storeDao, PurchaseDetailsDao purchaseDetailsDao,
-                                      StoreInventoryDao storeInventoryDao, PointOfSaleDao pointOfSaleDao, RecommendationDao recommendationDao
-    ) {
+                                      StoreInventoryDao storeInventoryDao, PointOfSaleDao pointOfSaleDao, RecommendationDao recommendationDao,
+                                      final GarmentDetailsDao garmentDetailsDao) {
         return (args) -> {
 
             // save store addresses
@@ -131,6 +135,8 @@ public class SaveDummyData {
             //save colours
             Colour black = new Colour("BLACK", "BK");
             colorDao.save(black);
+            Colour brown = new Colour("BROWN", "BR");
+            colorDao.save(brown);
             Colour blue = new Colour("BLUE", "BL");
             colorDao.save(blue);
             Colour green = new Colour("GREEN", "GR");
@@ -161,186 +167,118 @@ public class SaveDummyData {
             sizeDao.save(new Size(SizeEnum.OS, "-", "-", "-", TargetConsumer.M));
 
             //  save categories
-            Category category = new Category("Shirts and Blouses", "SB");
-            Category category1 = new Category("Jeans", "JN");
-            Category category2 = new Category("Trousers", "TR");
-            Category category3 = new Category("Denim", "DEN");
-            Category category4 = new Category("Accessories", "ACC");
+            Category shirtsAndBlouses = new Category("Shirts and Blouses", "SB");
+            Category jeans = new Category("Jeans", "JN");
+            Category trousers = new Category("Trousers", "TR");
+            Category denim = new Category("Denim", "DEN");
+            Category accs = new Category("Accessories", "ACC");
+            Category hoodies = new Category("Hoodies", "HOD");
 
-            categoryDao.save(category);
-            categoryDao.save(category1);
-            categoryDao.save(category2);
-            categoryDao.save(category3);
-            categoryDao.save(category4);
+            categoryDao.save(shirtsAndBlouses);
+            categoryDao.save(jeans);
+            categoryDao.save(trousers);
+            categoryDao.save(denim);
+            categoryDao.save(accs);
+            categoryDao.save(hoodies);
 
             //save garments
-            GarmentDetails garmentDetails = new GarmentDetails(null, SizeEnum.S, black, false, 0);
-            Garment garment = new Garment("", "", 0.0F, category, garmentDetails, TargetConsumer.F);
-////
-////            // save a couple of garments
-//            File image3 = new File("D:/THESIS/jeans.jpg");
-//            if (!image3.exists()) {
-//                image3 = new File("/mnt/d/THESIS/jeans.jpg");
-//            }
-//
-//            byte[] bytes3 = Files.readAllBytes(image3.toPath());
-//
-//            Garment garmentJeans = new Garment();
-//            garmentJeans.setName("Skinny Jeans");
-//            garmentJeans.setCode("SJ308");
-//            garmentJeans.setDescription("Skinny blue jeans");
-//            garmentJeans.setPrice((float) 40.99);
-//            garmentJeans.setCategory(categoryDao.findByCategoryName("Denim")
-//                    .orElse(new Category("Denim", "DEN")));
-//
-//            garmentJeans.setTargetConsumer(TargetConsumer.F);
-//            //    garment.setMaterial(materialDao.findAll().get(0));
-//            garmentJeans.setGarmentDetails(new GarmentDetails(bytes3, SizeEnum.S, colorDao.findByCode("BL").get(), false, 0));
-//            System.out.println("double1jean");
-//            garmentDao.save(garmentJeans);
-//            File image2 = new File("D:/THESIS/blackJeans.jpg");
-//            if (!image2.exists()) {
-//                image2 = new File("/mnt/d/THESIS/blackJeans.jpg");
-//            }
-//
-//            byte[] bytes2 = Files.readAllBytes(image2.toPath());
-//
-//            Garment jacket = new Garment();
-//            jacket.setName("Leather Jacket");
-//            jacket.setCode("LJ678");
-//            jacket.setDescription("Black Leather Jacket");
-//            jacket.setPrice((float) 80.99);
-//            categoryDao.save(new Category("Jackets", "JAC"));
-//            jacket.setCategory(categoryDao.findByCategoryName("Jackets")
-//                    .orElse(new Category("Jackets", "JAC")));
-//
-//            jacket.setTargetConsumer(TargetConsumer.F);
-//            //    garment.setMaterial(materialDao.findAll().get(0));
-//            jacket.setGarmentDetails(new GarmentDetails(bytes2, SizeEnum.S, colorDao.findByCode("BK").get(), true, (float) 0.20));
-//            System.out.println("double2jean");
-//            garmentDao.save(jacket);
-////
-//            recommendationDao.save(new Recommendation("2", garmentJeans.getSkuNumber()));
-//            recommendationDao.save(new Recommendation("2", jacket.getSkuNumber()));
-////
-////            File image2 = new File("D:/THESIS/blackJeans.jpg");
-////            if (!image2.exists()) {
-////                image2 = new File("/mnt/d/THESIS/blackJeans.jpg");
-////            }
-////
-////            byte[] bytes2 = Files.readAllBytes(image2.toPath());
-//
-//            Garment garmentBlackJeans = new Garment();
-//            garmentBlackJeans.setName("Skinny High-waisted Jeans");
-//            garmentBlackJeans.setCode("SJ309");
-//            garmentBlackJeans.setDescription("Skinny black jeans");
-//            garmentBlackJeans.setPrice((float) 50.99);
-//            garmentBlackJeans.setCategory(categoryDao.findByCategoryName("Denim")
-//                    .orElse(new Category("Denim", "DEN")));
-//
-//            garmentBlackJeans.setTargetConsumer(TargetConsumer.F);
-//            //    garment.setMaterial(materialDao.findAll().get(0));
-//            garmentBlackJeans.setGarmentDetails(new GarmentDetails(bytes2, SizeEnum.S, colorDao.findByCode("BK").get(), false, 0));
-//            System.out.println("double2jean");
-//            garmentDao.save(garmentBlackJeans);
-////
-////            recommendationDao.save(new Recommendation("2", garmentJeans.getSkuNumber()));
-//            recommendationDao.save(new Recommendation("2", garmentBlackJeans.getSkuNumber()));
-//
-//            File image = new File("D:/THESIS/officeShirt.jpg");
-//            if (!image.exists()) {
-//                image = new File("/mnt/d/THESIS/officeShirt.jpg");
-//            }
-//
-//            byte[] bytes = Files.readAllBytes(image.toPath());
-//
-//            Garment garment = new Garment();
-//            garment.setName("Striped Shirt");
-//            garment.setCode("BS01");
-//            garment.setDescription("Striped Shirt with loose shoulders");
-//            garment.setPrice((float) 20.99);
-//            garment.setCategory(categoryDao.findByCategoryName("Shirts and Blouses")
-//                    .orElse(new Category("T-Shirts", "TS")));
-//
-//            garment.setTargetConsumer(TargetConsumer.F);
-//            //    garment.setMaterial(materialDao.findAll().get(0));
-//            garment.setGarmentDetails(new GarmentDetails(bytes, SizeEnum.S, whiteBlue, true, 0.5F));
-//            System.out.println("double1");
-//            garmentDao.save(garment);
-//            System.out.println("double2");
-//            Garment test = new Garment();
-//            test.setName("Basic T-Shirt");
-//            test.setCode("BS01");
-//            test.setDescription("Basic T-Shirt made of cotton");
-//            test.setPrice((float) 20.99);
-//            test.setCategory(categoryDao.findByCategoryName("Shirts and Blouses")
-//                    .orElse(new Category("T-Shirts", "TS")));
-//
-//            test.setTargetConsumer(TargetConsumer.F);
-//            test.setGarmentDetails(new GarmentDetails(bytes, SizeEnum.S, yellow, false, 0));
-//            garmentDao.save(test);
-//
-//            Garment test2 = new Garment();
-//            test2.setName("Basic T-Shirt");
-//            test2.setCode("BS01");
-//            test2.setDescription("Basic T-Shirt made of cotton");
-//            test2.setPrice((float) 20.99);
-//            test2.setCategory(categoryDao.findByCategoryName("Shirts and Blouses")
-//                    .orElse(new Category("T-Shirts", "TS")));
-//
-//            test2.setTargetConsumer(TargetConsumer.F);
-//            test2.setGarmentDetails(new GarmentDetails(bytes, SizeEnum.M, red, false, 0));
-//            garmentDao.save(test2);
-//
-//            Garment garment1 = new Garment();
-//            garment1.setName("Office Shirt");
-//            garment1.setCode("OFS01");
-//            garment1.setDescription("Shirt for the office");
-//            garment1.setPrice((float) 50.0);
-//            garment1.setCategory(categoryDao.findByCategoryName("Shirts and Blouses")
-//                    .orElse(new Category("Shirts", "SH")));
-//
-//            garment1.setTargetConsumer(TargetConsumer.F);
-//            //   garment1.setMaterial(materialDao.findAll().get(1));
-//            garment1.setGarmentDetails(new GarmentDetails(bytes, SizeEnum.S, multicolour, true, 0.5F));
-//            garmentDao.save(garment1);
-//
-//            Garment garment3 = new Garment();
-//            garment3.setName("Office Shirt");
-//            garment3.setCode("OFS02");
-//            garment3.setDescription("Shirt for the office");
-//            garment3.setPrice((float) 50.0);
-//            garment3.setCategory(categoryDao.findByCategoryName("Shirts and Blouses")
-//                    .orElse(new Category("Shirts", "SH")));
-//
-//            garment3.setTargetConsumer(TargetConsumer.F);
-//            //   garment3.setMaterial(materialDao.findAll().get(1));
-//            garment3.setGarmentDetails(new GarmentDetails(bytes, SizeEnum.M, multicolour, true, 0.5F));
-//            garmentDao.save(garment3);
-//
-//            Garment garment4 = new Garment();
-//            garment4.setName("Office Shirt");
-//            garment4.setCode("OFS02");
-//            garment4.setDescription("Shirt for the office");
-//            garment4.setPrice((float) 50.0);
-//            garment4.setCategory(categoryDao.findByCategoryName("Shirts and Blouses")
-//                    .orElse(new Category("Shirts", "SH")));
-//
-//            garment4.setTargetConsumer(TargetConsumer.F);
-//            //   garment3.setMaterial(materialDao.findAll().get(1));
-//            garment4.setGarmentDetails(new GarmentDetails(bytes, SizeEnum.S, multicolour, true, 0.5F));
-//            garmentDao.save(garment4);
-//
-//            //save materials
-//            materialDao.save(new Material("cotton", 20, garment.getCode()));
-//            materialDao.save(new Material("viscose", 80, garment.getCode()));
-//            materialDao.save(new Material("cotton", 100, garment1.getCode()));
-//            materialDao.save(new Material("cotton", 100, garment3.getCode()));
-////            materialDao.save(new Material(60, 20, 20, 0, 0));
-////            materialDao.save(new Material(20, 80, 0, 0, 0));
-////            //materialDao.save(new Material(20, 0, 0, 0, 80));
-//
-//            StoreInventory storeInventory = new StoreInventory(store, garment);
+            //001
+            File image = new File(System.getProperty("user.dir") + "/images/001psathino-kapelo.jpg");
+            byte[] bytes = Files.readAllBytes(image.toPath());
+
+            GarmentDetails garmentDetails = new GarmentDetails(bytes, SizeEnum.OS, brown, false, 0);
+            garmentDetailsDao.save(garmentDetails);
+
+            Garment garment = new Garment("Ψάθινο Καπέλο", "Ψάθινο καπέλο θαλάσσης", 15.99F, accs, garmentDetails, TargetConsumer.F, "BH001");
+
+            garmentDao.save(garment);
+
+            saveGarments(garment, 10, garmentDao, storeInventoryDao, storeDao);
+            materialDao.save(new Material("straw", 100, garment.getCode()));
+
+            //002
+            File image2 = new File(System.getProperty("user.dir") + "/images/002kokkino-hoodie.jpg");
+            byte[] bytes2 = Files.readAllBytes(image2.toPath());
+
+            GarmentDetails garmentDetails2 = new GarmentDetails(bytes2, SizeEnum.XS, red, false, 0);
+            GarmentDetails garmentDetails3 = new GarmentDetails(bytes2, SizeEnum.S, red, false, 0);
+            GarmentDetails garmentDetails4 = new GarmentDetails(bytes2, SizeEnum.M, red, false, 0);
+            GarmentDetails garmentDetails5 = new GarmentDetails(bytes2, SizeEnum.L, red, false, 0);
+            garmentDetailsDao.save(garmentDetails2);
+            garmentDetailsDao.save(garmentDetails3);
+            garmentDetailsDao.save(garmentDetails4);
+            garmentDetailsDao.save(garmentDetails5);
+
+            Garment garment2 = new Garment("Φούτερ \"Tomato Soup\"", "Κόκκινο φούτερ με σχέδιο", 25.99F, hoodies, garmentDetails2, TargetConsumer.F
+                    , "RH001");
+            garmentDao.save(garment2);
+
+            Garment garment3 = new Garment("Φούτερ \"Tomato Soup\"", "Κόκκινο φούτερ με σχέδιο", 25.99F, hoodies, garmentDetails3, TargetConsumer.F
+                    , "RH001");
+            garmentDao.save(garment3);
+
+            Garment garment4 = new Garment("Φούτερ \"Tomato Soup\"", "Κόκκινο φούτερ με σχέδιο", 25.99F, hoodies, garmentDetails4, TargetConsumer.F
+                    , "RH001");
+            garmentDao.save(garment4);
+
+            Garment garment5 = new Garment("Φούτερ \"Tomato Soup\"", "Κόκκινο φούτερ με σχέδιο", 25.99F, hoodies, garmentDetails5, TargetConsumer.F
+                    , "RH001");
+            garmentDao.save(garment5);
+
+            saveGarments(garment2, 10, garmentDao, storeInventoryDao, storeDao);
+            saveGarments(garment3, 20, garmentDao, storeInventoryDao, storeDao);
+            saveGarments(garment4, 60, garmentDao, storeInventoryDao, storeDao);
+            saveGarments(garment5, 5, garmentDao, storeInventoryDao, storeDao);
+
+            materialDao.save(new Material("cotton", 100, garment2.getCode()));
+
+
+            //003
+            File image3 = new File(System.getProperty("user.dir") + "/images/003denim-shorts.jpg");
+            byte[] bytes3 = Files.readAllBytes(image3.toPath());
+
+            GarmentDetails garmentDetailsShorts = new GarmentDetails(bytes3, SizeEnum.XXS, blue, true, 0.2F);
+            GarmentDetails garmentDetailsShorts1 = new GarmentDetails(bytes3, SizeEnum.XS, blue, true, 0.2F);
+            GarmentDetails garmentDetailsShorts2 = new GarmentDetails(bytes3, SizeEnum.S, blue, true, 0.2F);
+            GarmentDetails garmentDetailsShorts3 = new GarmentDetails(bytes3, SizeEnum.M, blue, true, 0.2F);
+            GarmentDetails garmentDetailsShorts4 = new GarmentDetails(bytes3, SizeEnum.L, blue, true, 0.2F);
+            garmentDetailsDao.save(garmentDetailsShorts);
+            garmentDetailsDao.save(garmentDetailsShorts1);
+            garmentDetailsDao.save(garmentDetailsShorts2);
+            garmentDetailsDao.save(garmentDetailsShorts3);
+            garmentDetailsDao.save(garmentDetailsShorts4);
+
+            Garment garmentShorts = new Garment("Τζιν σόρτς", "Τζιν σόρτς με σκισίματα", 34.99F, denim, garmentDetailsShorts, TargetConsumer.F,
+                    "DS004");
+            garmentDao.save(garmentShorts);
+
+            Garment garmentShorts1 = new Garment("Τζιν σόρτς", "Τζιν σόρτς με σκισίματα", 34.99F, denim, garmentDetailsShorts1, TargetConsumer.F,
+                    "DS004");
+            garmentDao.save(garmentShorts1);
+
+            Garment garmentShorts2 = new Garment("Τζιν σόρτς", "Τζιν σόρτς με σκισίματα", 34.99F, denim, garmentDetailsShorts2, TargetConsumer.F,
+                    "DS004");
+            garmentDao.save(garmentShorts2);
+
+            Garment garmentShorts3 = new Garment("Τζιν σόρτς", "Τζιν σόρτς με σκισίματα", 34.99F, denim, garmentDetailsShorts3, TargetConsumer.F,
+                    "DS004");
+            garmentDao.save(garmentShorts3);
+
+            Garment garmentShorts4 = new Garment("Τζιν σόρτς", "Τζιν σόρτς με σκισίματα", 34.99F, denim, garmentDetailsShorts4, TargetConsumer.F,
+                    "DS004");
+            garmentDao.save(garmentShorts4);
+
+            saveGarments(garmentShorts, 50, garmentDao, storeInventoryDao, storeDao);
+            saveGarments(garmentShorts1, 40, garmentDao, storeInventoryDao, storeDao);
+            saveGarments(garmentShorts2, 80, garmentDao, storeInventoryDao, storeDao);
+            saveGarments(garmentShorts3, 20, garmentDao, storeInventoryDao, storeDao);
+            saveGarments(garmentShorts4, 100, garmentDao, storeInventoryDao, storeDao);
+
+            materialDao.save(new Material("cotton", 100, garmentShorts.getCode()));
+
+            // save inventory
+
+            StoreInventory storeInventory = new StoreInventory(store, garment);
 //
 //            storeInventoryDao.save(storeInventory);
 //
@@ -413,6 +351,28 @@ public class SaveDummyData {
             digits[i] = (char) (random.nextInt(10) + '0');
         }
         return String.copyValueOf(digits);
+    }
+
+    private void saveGarments(Garment garment, int times, GarmentDao garmentDao, StoreInventoryDao storeInventoryDao, StoreDao storeDao) {
+
+        List<Store> all = storeDao.findAll();
+        StoreInventory storeInventory1 = new StoreInventory(all.get(0), garment);
+        storeInventoryDao.save(storeInventory1);
+
+        int c = 0;
+
+        for (int i = 0; i < times; i++) {
+            if (c > 3) {
+                c = 0;
+            }
+            Garment g1 = new Garment(garment);
+            g1.setGarmentDetails(garment.getGarmentDetails());
+            garmentDao.save(g1);
+
+            StoreInventory storeInventory = new StoreInventory(all.get(c++), g1);
+            storeInventoryDao.save(storeInventory);
+        }
+
     }
 
 }

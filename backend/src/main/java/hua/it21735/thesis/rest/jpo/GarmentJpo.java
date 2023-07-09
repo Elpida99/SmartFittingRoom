@@ -52,11 +52,8 @@ public class GarmentJpo {
 
     public Garment toGarment() {
 
-        Garment garment = new Garment(name, description, price, new Category(categoryName, categoryCode),
-                new GarmentDetails(image, size, new Colour(colorName, colorCode), discountPercentage != 0.0, discountPercentage), targetConsumer);
-        garment.setCode(code);
-
-        return garment;
+        return new Garment(name, description, price, new Category(categoryName, categoryCode),
+                new GarmentDetails(image, size, new Colour(colorName, colorCode), discountPercentage != 0.0, discountPercentage), targetConsumer, code);
     }
 
     public String getName() {

@@ -30,7 +30,7 @@ public class Garment {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne//(cascade = CascadeType.ALL)
     @JoinColumn(name = "garment_details_id")
     private GarmentDetails garmentDetails;
 
@@ -54,13 +54,25 @@ public class Garment {
     public Garment(String name, String description,
                    float price, Category category,
                    GarmentDetails garmentDetails,
-                   TargetConsumer targetConsumer) {
+                   TargetConsumer targetConsumer, String code) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.category = category;
         this.garmentDetails = garmentDetails;
         this.targetConsumer = targetConsumer;
+        this.code = code;
+    }
+
+    public Garment(Garment g) {
+        this.name = g.getName();
+        this.description = g.getDescription();
+        this.price = g.getPrice();
+        this.category = g.getCategory();
+//        this.garmentDetails = g.getGarmentDetails();
+//        this.garmentDetails = new GarmentDetails(g.getGarmentDetails().getImage(), g.getGarmentDetails().getSize(), g.getGarmentDetails().getColour(), g.getGarmentDetails().hasDiscount(), g.getGarmentDetails().getDiscountPercentage());
+        this.targetConsumer = g.getTargetConsumer();
+        this.code = g.getCode();
     }
 
     @PrePersist
