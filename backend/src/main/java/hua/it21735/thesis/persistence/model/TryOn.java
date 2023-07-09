@@ -37,6 +37,13 @@ public class TryOn {
     public TryOn() {
     }
 
+    public TryOn(LocalDateTime dateTime, Store store, Customer customer, List<Garment> garments) {
+        this.dateTime = dateTime;
+        this.store = store;
+        this.customer = customer;
+        this.garments = garments;
+    }
+
     public Long getId() {
         return id;
     }

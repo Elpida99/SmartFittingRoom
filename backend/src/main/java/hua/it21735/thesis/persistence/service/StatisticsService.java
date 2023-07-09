@@ -142,16 +142,14 @@ public class StatisticsService {
 
             if (result.containsKey(key)) {
                 result.put(key, result.get(key) + 1);
+            } else {
+                result.put(key, 1);
             }
-            result.put(key, 1);
         }
 
         return result;
     }
 
-    public void getMemberData() {
-
-    }
 
     public Map<String, List<Integer>> getCustomerInfo() {
         List<Customer> all = customerService.findAll();
