@@ -19,7 +19,7 @@ public class Recommendation {
     public Recommendation() {
     }
 
-    public Recommendation(final String outfit, final String garment_sku) {
+    public Recommendation(String outfit, String garment_sku) {
         this.outfit = outfit;
         this.garment_sku = garment_sku;
     }

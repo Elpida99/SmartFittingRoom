@@ -147,6 +147,8 @@ public class SaveDummyData {
             colorDao.save(yellow);
             Colour whiteBlue = new Colour("WHITE/BLUE", "WB");
             colorDao.save(whiteBlue);
+            Colour white = new Colour("WHITE", "W");
+            colorDao.save(white);
             Colour multicolour = new Colour("MULTI-COLOUR", "MULT");
             colorDao.save(multicolour);
 
@@ -173,6 +175,7 @@ public class SaveDummyData {
             Category denim = new Category("Denim", "DEN");
             Category accs = new Category("Accessories", "ACC");
             Category hoodies = new Category("Hoodies", "HOD");
+            Category crochet = new Category("Crochet and Knit", "CRKN");
 
             categoryDao.save(shirtsAndBlouses);
             categoryDao.save(jeans);
@@ -180,6 +183,7 @@ public class SaveDummyData {
             categoryDao.save(denim);
             categoryDao.save(accs);
             categoryDao.save(hoodies);
+            categoryDao.save(crochet);
 
             //save garments
             //001
@@ -276,23 +280,80 @@ public class SaveDummyData {
 
             materialDao.save(new Material("cotton", 100, garmentShorts.getCode()));
 
-            // save inventory
+            //005
+            File image4 = new File(System.getProperty("user.dir") + "/images/005-white-button-shirt.jpg");
+            byte[] bytes4 = Files.readAllBytes(image4.toPath());
 
-            StoreInventory storeInventory = new StoreInventory(store, garment);
-//
-//            storeInventoryDao.save(storeInventory);
-//
-//            StoreInventory storeInventory1 = new StoreInventory(store, garment1);
-//            StoreInventory storeInventory2 = new StoreInventory(store, test);
-//            StoreInventory storeInventory3 = new StoreInventory(store, test2);
-//            StoreInventory storeInventory4 = new StoreInventory(store, garment3);
-//            StoreInventory storeInventory5 = new StoreInventory(store2, garment4);
-//
-//            storeInventoryDao.save(storeInventory1);
-//            storeInventoryDao.save(storeInventory2);
-//            storeInventoryDao.save(storeInventory3);
-//            storeInventoryDao.save(storeInventory4);
-//            storeInventoryDao.save(storeInventory5);
+            GarmentDetails garmentDetailsShirt= new GarmentDetails(bytes4, SizeEnum.XXS, blue, false, 0.0F);
+            GarmentDetails garmentDetailsShirt1 = new GarmentDetails(bytes4, SizeEnum.XS, blue, false, 0.0F);
+            GarmentDetails garmentDetailsShirt2 = new GarmentDetails(bytes4, SizeEnum.S, blue, false, 0.0F);
+            GarmentDetails garmentDetailsShirt3 = new GarmentDetails(bytes4, SizeEnum.M, blue, false, 0.0F);
+            GarmentDetails garmentDetailsShirt4 = new GarmentDetails(bytes4, SizeEnum.L, blue, false, 0.0F);
+            garmentDetailsDao.save(garmentDetailsShirt);
+            garmentDetailsDao.save(garmentDetailsShirt1);
+            garmentDetailsDao.save(garmentDetailsShirt2);
+            garmentDetailsDao.save(garmentDetailsShirt3);
+            garmentDetailsDao.save(garmentDetailsShirt4);
+
+            Garment garmentShirt = new Garment("Λευκή μπλούζα με κουμπιά", "Λευκή μπλούζα με καφέ κουμπιά", 25.99F, shirtsAndBlouses, garmentDetailsShirt, TargetConsumer.F, "WS065");
+            garmentDao.save(garmentShirt);
+
+            Garment garmentShirt1 = new Garment("Λευκή μπλούζα με κουμπιά", "Λευκή μπλούζα με καφέ κουμπιά", 25.99F, shirtsAndBlouses, garmentDetailsShirt1, TargetConsumer.F, "WS065");
+            garmentDao.save(garmentShirt1);
+
+            Garment garmentShirt2 = new Garment("Λευκή μπλούζα με κουμπιά", "Λευκή μπλούζα με καφέ κουμπιά", 25.99F, shirtsAndBlouses, garmentDetailsShirt2, TargetConsumer.F, "WS065");
+            garmentDao.save(garmentShirt2);
+
+            Garment garmentShirt3 = new Garment("Λευκή μπλούζα με κουμπιά", "Λευκή μπλούζα με καφέ κουμπιά", 25.99F, shirtsAndBlouses, garmentDetailsShirt3, TargetConsumer.F, "WS065");
+            garmentDao.save(garmentShirt3);
+
+            Garment garmentShirt4 = new Garment("Λευκή μπλούζα με κουμπιά", "Λευκή μπλούζα με καφέ κουμπιά", 25.99F, shirtsAndBlouses, garmentDetailsShirt4, TargetConsumer.F, "WS065");
+            garmentDao.save(garmentShirt4);
+
+            saveGarments(garmentShirt, 50, garmentDao, storeInventoryDao, storeDao);
+            saveGarments(garmentShirt1, 40, garmentDao, storeInventoryDao, storeDao);
+            saveGarments(garmentShirt2, 80, garmentDao, storeInventoryDao, storeDao);
+            saveGarments(garmentShirt3, 20, garmentDao, storeInventoryDao, storeDao);
+            saveGarments(garmentShirt4, 100, garmentDao, storeInventoryDao, storeDao);
+
+            materialDao.save(new Material("cotton", 20, garmentShirt.getCode()));
+            materialDao.save(new Material("viscose", 80, garmentShirt.getCode()));
+
+            //004-poncho
+            File image5 = new File(System.getProperty("user.dir") + "/images/004-poncho.jpg");
+            byte[] bytes5 = Files.readAllBytes(image5.toPath());
+
+            GarmentDetails garmentDetailsPoncho = new GarmentDetails(bytes5, SizeEnum.OS, white, false, 0);
+            garmentDetailsDao.save(garmentDetailsPoncho);
+
+            Garment garmentPoncho = new Garment("Πλεκτό Πόντσο", "Χειροποίητο πλεκτό πόντσο", 59.99F, crochet, garmentDetailsPoncho, TargetConsumer.F, "CP324");
+
+            garmentDao.save(garmentPoncho);
+
+            saveGarments(garmentPoncho, 70, garmentDao, storeInventoryDao, storeDao);
+            materialDao.save(new Material("cotton", 80, garment.getCode()));
+            materialDao.save(new Material("acrylic", 20, garment.getCode()));
+
+            recommendationDao.save(new Recommendation("1", garment.getSkuNumber()));
+            recommendationDao.save(new Recommendation("2", garment.getSkuNumber()));
+            recommendationDao.save(new Recommendation("3", garment.getSkuNumber()));
+            recommendationDao.save(new Recommendation("4", garment.getSkuNumber()));
+            recommendationDao.save(new Recommendation("5", garment.getSkuNumber()));
+            recommendationDao.save(new Recommendation("1", garmentPoncho.getSkuNumber()));
+            recommendationDao.save(new Recommendation("2", garmentPoncho.getSkuNumber()));
+            recommendationDao.save(new Recommendation("3", garmentPoncho.getSkuNumber()));
+            recommendationDao.save(new Recommendation("4", garmentPoncho.getSkuNumber()));
+            recommendationDao.save(new Recommendation("5", garmentPoncho.getSkuNumber()));
+            recommendationDao.save(new Recommendation("1", garmentShorts.getSkuNumber()));
+            recommendationDao.save(new Recommendation("2", garmentShorts1.getSkuNumber()));
+            recommendationDao.save(new Recommendation("3", garmentShorts2.getSkuNumber()));
+            recommendationDao.save(new Recommendation("4", garmentShorts3.getSkuNumber()));
+            recommendationDao.save(new Recommendation("5", garmentShorts4.getSkuNumber()));
+            recommendationDao.save(new Recommendation("1", garmentShirt.getSkuNumber()));
+            recommendationDao.save(new Recommendation("2", garmentShirt1.getSkuNumber()));
+            recommendationDao.save(new Recommendation("3", garmentShirt2.getSkuNumber()));
+            recommendationDao.save(new Recommendation("4", garmentShirt3.getSkuNumber()));
+            recommendationDao.save(new Recommendation("5", garmentShirt4.getSkuNumber()));
 
 //            List<PurchaseDetails> details = new ArrayList<>();
 //            PurchaseDetails purchaseDetails = new PurchaseDetails();
