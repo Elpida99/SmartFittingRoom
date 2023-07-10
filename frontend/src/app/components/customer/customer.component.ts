@@ -25,7 +25,12 @@ export class CustomerComponent implements OnInit {
       this.loggedin = data['loggedIn'];
       this.email = data['email'];
       console.log(this.loggedin);
+
+      if(this.loggedin!='none') {
+        this.getCustomer();
+      }
     });
+
   }
 
   cardId = "";
@@ -34,7 +39,7 @@ export class CustomerComponent implements OnInit {
   errorThrown = false;
 
   ngOnInit(): void {
-    this.getCustomer();
+   // this.getCustomer();
   }
 
   address;
@@ -56,8 +61,11 @@ export class CustomerComponent implements OnInit {
   }
 
   getCustomer() {
+
+    console.log('email');
+    console.log(this.email);
     let requestParams = new HttpParams();
-    requestParams = requestParams.append('email', 'papadkon@gmail.com');
+    requestParams = requestParams.append('email', this.loggedin + '@gmail.com');
 
     this.service.getCustomer(requestParams).subscribe(data => {
       console.log(data);

@@ -14,4 +14,6 @@ public interface PointOfSaleDao extends JpaRepository<PointOfSale, Long> {
     List<PointOfSale> findByStore(String storeName);
 
     List<PointOfSale> findbyCustomer(Customer customer);
+
+    boolean existsByDetails_Product_Barcode(Long barcode);
 }

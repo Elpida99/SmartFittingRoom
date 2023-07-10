@@ -34,4 +34,13 @@ public class StoreService {
         return storeInventoryDao.findByStore(getByName(storeId));
     }
 
+    public StoreInventory getByBarcode(Long barcode) {
+        return storeInventoryDao.findByGarment_Barcode(barcode).orElse(null);
+    }
+
+    public void deleteInv(StoreInventory storeInventory) {
+        if (storeInventory.getId() != null)
+            storeInventoryDao.deleteById(storeInventory.getId());
+    }
+
 }

@@ -81,7 +81,10 @@ public class CustomerService {
     }
 
     public Customer getByEmail(String email) {
+        System.out.println("email = " + email);
+        System.out.println("CustomerService.getByEmail");
         Optional<Customer> customer = customerDao.findByEmail(email);
+        System.out.println(customer.toString());
         return customer.orElse(null);
     }
 

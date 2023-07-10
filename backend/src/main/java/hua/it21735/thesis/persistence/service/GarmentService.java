@@ -31,6 +31,7 @@ public class GarmentService {
     @Autowired
     private StoreService storeService;
 
+
     public List<Garment> findAll() {
         return garmentDao.findAll();
     }

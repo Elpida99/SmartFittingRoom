@@ -106,7 +106,7 @@ public class TryOnResource {
             email = customerService.getById(customerId).getEmail();
             isloggedIn = email.split("@")[0];
         }
-        System.out.println("isloggedIn = " + isloggedIn);
+        System.out.println("{\"loggedIn\": \"" + isloggedIn + "\",\n\t\"email\": \"" +email+ "\"\n}  ");
         return ResponseEntity.ok("{\"loggedIn\": \"" + isloggedIn + "\",\n\t\"email\": \"" +email+ "\"\n}  ");
 
     }

@@ -10,7 +10,8 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "PointOfSale.findByStatus", query = "select p from PointOfSale p where p.statusEnum = :status"),
         @NamedQuery(name = "PointOfSale.findByStore", query = "select p from PointOfSale p where p.store.name = :storeName"),
-        @NamedQuery(name = "PointOfSale.findbyCustomer", query = "select p from PointOfSale p where p.customer = :customer")
+        @NamedQuery(name = "PointOfSale.findbyCustomer", query = "select p from PointOfSale p where p.customer = :customer"),
+        @NamedQuery(name = "PointOfSale.existsByDetails_Product_Barcode", query = "select (count(p) > 0) from PointOfSale p inner join p.details details where details.product.barcode = :barcode")
 })
 @SequenceGenerator(name = "POINT_OF_SALE_SEQ", sequenceName = "pointOfSale_sequence", allocationSize = 1, initialValue = 1)
 public class PointOfSale {

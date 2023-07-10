@@ -24,6 +24,8 @@ public class TryOnService {
     CustomerService customerService;
     @Autowired
     private TryOnDao tryOnDao;
+    @Autowired
+    private PurchaseService purchaseService;
 
     public TryOn getById(Long id) {
         Optional<TryOn> found = tryOnDao.findById(id);
@@ -52,7 +54,9 @@ public class TryOnService {
             tryOn.setStore(storeService.getByName(storeId));
             tryOn.setCustomer(customerService.getById(customerId));
             System.out.println("tryOn = " + tryOn.toString());
-            save(tryOn);
+            if(!purchaseService.existsByDetails_Product_Barcode(barcode)) {
+                save(tryOn);
+            }
         } else {
             throw new NullPointerException("Garment not found");
         }
@@ -67,7 +71,9 @@ public class TryOnService {
             tryOn.setDateTime(LocalDateTime.now());
             tryOn.setStore(storeService.getByName(storeId));
             tryOn.setCustomer(null);
-            save(tryOn);
+            if(!purchaseService.existsByDetails_Product_Barcode(barcode)) {
+                save(tryOn);
+            }
         } else {
             throw new NullPointerException("Garment not found");
         }

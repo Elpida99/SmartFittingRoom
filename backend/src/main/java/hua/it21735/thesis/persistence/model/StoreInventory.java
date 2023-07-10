@@ -5,7 +5,8 @@ import javax.persistence.*;
 @Entity(name = "StoreInventory")
 @Table(name = "STORE_INVENTORY")
 @NamedQueries({
-        @NamedQuery(name = "StoreInventory.findByStore", query = "select s from StoreInventory s where s.store = :store")
+        @NamedQuery(name = "StoreInventory.findByStore", query = "select s from StoreInventory s where s.store = :store"),
+        @NamedQuery(name = "StoreInventory.findByGarment_Barcode", query = "select s from StoreInventory s where s.garment.barcode = :barcode")
 })
 @SequenceGenerator(name = "STORE_INVENTORY_SEQ", sequenceName = "storeInventory_sequence", allocationSize = 1, initialValue = 1)
 public class StoreInventory {

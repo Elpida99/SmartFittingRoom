@@ -11,4 +11,6 @@ public interface StoreInventoryDao extends JpaRepository<StoreInventory, Long> {
 
     List<StoreInventory> findByStore(Store store);
 
+    Optional<StoreInventory> findByGarment_Barcode(Long barcode);
+
 }

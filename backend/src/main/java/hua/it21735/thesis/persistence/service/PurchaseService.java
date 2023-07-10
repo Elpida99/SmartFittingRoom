@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PurchaseService {
@@ -22,9 +23,19 @@ public class PurchaseService {
     @Autowired
     private StoreService storeService;
 
+    @Transactional
     public Long save(PointOfSale pos) {
         if (pos != null) {
             PointOfSale saved = pointOfSaleDao.save(pos);
+            List<Garment> collect = saved.getDetails().stream().map(PurchaseDetails::getProduct).collect(Collectors.toList());
+            for(Garment g : collect) {
+                StoreInventory storeInventory = storeService.getByBarcode(g.getBarcode());
+                if(storeInventory != null) {
+                    storeService.deleteInv(storeInventory);
+                }
+            }
+
+
             return saved.getId();
         }
         return null;
@@ -47,9 +58,15 @@ public class PurchaseService {
                     purchaseDetails.setProduct(garment);
                     purchaseDetails.setPrice();
                     purchaseDetailsList.add(purchaseDetails);
+
+                    StoreInventory storeInventory = storeService.getByBarcode(barcode);
+                    if(storeInventory != null) {
+                        storeService.deleteInv(storeInventory);
+                    }
                 }
             }
             pos.getDetails().addAll(purchaseDetailsList);
+
             return save(pos);
         }
         return null;
@@ -136,5 +153,9 @@ public class PurchaseService {
         }
 
         return revenue;
+    }
+
+    public boolean existsByDetails_Product_Barcode(final Long barcode) {
+        return pointOfSaleDao.existsByDetails_Product_Barcode(barcode);
     }
 }
